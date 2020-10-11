@@ -1,7 +1,12 @@
+COMPOSE := docker-compose -f docker-compose.test.yml
+
 all: build test
 
 build:
-	docker-compose -f docker-compose.test.yml build
+	$(COMPOSE) build --pull
+
+run:
+	$(COMPOSE) run --rm sut /bin/sh
 
 test:
-	docker-compose -f docker-compose.test.yml up --build --exit-code-from sut --abort-on-container-exit
+	$(COMPOSE) up --build --exit-code-from sut --abort-on-container-exit
